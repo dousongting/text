@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    
+    table {
+      margin: 50px auto;
+    }
+    
+    td {
+      padding: 15px;
+      text-align: center;
+      /*border: 1px solid #000;*/
+    }
+    
+    input {
+      width: 100px;
+      height: 40px;
+    }
+    .current{
+      background-color: #22FF7C;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<input type="button" value="点名" id="btn1">
+<input type="button" value="结束" id="btn2">
+
+</body>
+
+<script>
+//  1.创建table表格
+//  2.添加行和列
+//  3.给每一个列添加样式
+//  4.给点名注册点击事件
+//  5.随机选中一个td,并且让他高亮，让其他的td不亮
+
+var list = [
+  ["@","@","@","讲师","@","@","杜嘉晖","廖国藩","王浩","孙广明","@"],
+  ["@","张萍","叶继平","沈阳","许诚","@","罗杰","武富云","汪昊","曹菁","罗莉"],
+  ["@","黄泽民","吴永霞","刘娟","李琛","@","贾海华","葛玥","袁小雨","袁敏","李佩芸","窦松婷"],
+  ["刘玉军","尹钦","冯梓硕","阙文琦","唐海华","@","许海燕","张曼曼","王正来","顾军","陈辉","杨阳"],
+  ["王梦茹","胡佳丽","何育娟","郞文静","刘莹","@","王继杰","王寿南","何家亮","杨博文","路雨","梅瑶瑶"],
+  ["张杰","李明珠","王淑华","谭喜兵","周云卓","@","张陆凯","宋余乐","王琨","胡崇文","谢凌辉","王康"],
+  ["@","黄张龙","王世波","孙苏霞","陈振","@","刘钦罡","黄维","吴伟强","张童","李斌"],
+  ["@","@","@","@","@","@","@","@","@","@","@"]
+];
+var arr = [];  //用来接收班级人员
+//1.找对象
+var btn1 = document.getElementById("btn1");
+var btn2 = document.getElementById("btn2");
+//2.创建table标签
+var table = document.createElement("table");
+//3.把table标签添加到body的最后面
+
+document.body.appendChild(table);
+
+  for(var i = 0; i < list.length; i++){
+//    4.创建tr标签，创建多少个tr标签由list.length决定
+    var tr = document.createElement("tr");
+//    5.把tr添加到table中
+    table.appendChild(tr);
+    
+    for(var j = 0; j < list[i].length; j++){
+//      6.创建td标签，创建多少td由list[i].length决定
+      var td = document.createElement("td");
+//      把td添加到tr中
+      tr.appendChild(td);
+//      7.给td添加内容，因为@是不做人的位置，所以不用给他添加内容
+      if(list[i][j] != "@"){
+        
+        td.innerHTML = list[i][j];
+        td.style.backgroundColor = "yellowgreen";
+//        需要优化的地方
+//        td.className = "td";//可以把它换成一个用数组来接收人员姓名
+        if(list[i][j] == "罗电雷"){
+          continue;
+        }
+        arr.push(td);
+      }
+    }
+    
+  }
+var timeId;
+//  var tds = document.getElementsByClassName("td");
+  btn1.onclick = function () {
+    timeId = setInterval(function () {
+      for(var j = 0; j < arr.length; j++){
+        arr[j].style.backgroundColor = "yellowgreen";
+      }
+      var random = parseInt(Math.random()*arr.length);
+      arr[random].style.backgroundColor = "hotpink";
+      
+    },100);
+    
+  }
+  btn2.onclick = function () {
+    clearInterval(timeId);
+  }
+  
+  
+</script>
+</html>
